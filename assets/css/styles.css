@@ -1,0 +1,46 @@
+a {
+	text-decoration: none !important;
+}
+
+input {
+	caret-color: green !important;
+}
+
+.bgModal {
+	background-color: rgba(43, 165, 137, 0.45);
+}
+
+.bg-are {
+	background-color: #D0A03A !important;
+}
+
+.bg-image {
+	background-image: url("../img/palmer.jpg") !important;
+	background-position: center;
+  	background-size: cover;
+}
+
+.col-btn {
+	background: #527908 !important;
+}
+
+.hovAnim {
+	transition: 0.5s;
+}
+
+.hovAnim:hover {
+	transform: scale(1.03,1.03);
+	/*transform: rotate(-5deg);*/
+}
+
+.tra5 {
+	transition: 0.5s;
+}
+
+.hovTar:hover {
+	transform: scale(1.03,1.03);
+}
+
+.icoRes:hover {
+	color: #1cc88a !important;
+}
