@@ -4,4 +4,4 @@
 ?>
 
 
-<h1>bienvenido usuario</h1>
+<h1>bienvenido usuario a tu perfil</h1>
