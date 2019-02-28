@@ -6,8 +6,27 @@ input {
 	caret-color: green !important;
 }
 
+hr {
+	border-radius: 2px;
+	height: 2px;
+	background-color: #527908 !important;
+}
+
 .bgModal {
 	background-color: rgba(43, 165, 137, 0.45);
+}
+
+.btn-reg-ini {
+	color: #fff;
+	transition: 0.5s;
+}
+
+.btn-reg-ini:hover {
+	border-radius: 10px;
+	background-color: #527908 !important;
+	color: #fff;
+	font-weight: bold;
+	transform: scale(1.2,1.2);
 }
 
 .bg-are {
@@ -22,6 +41,11 @@ input {
 
 .col-btn {
 	background: #527908 !important;
+}
+
+.div1 {
+	height: 20px;
+	background: red;
 }
 
 .hovAnim {
