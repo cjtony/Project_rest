@@ -6,11 +6,11 @@ input {
 	caret-color: green !important;
 }
 
-hr {
+/*hr {
 	border-radius: 2px;
 	height: 2px;
 	background-color: #527908 !important;
-}
+}*/
 
 .bgModal {
 	background-color: rgba(43, 165, 137, 0.45);
