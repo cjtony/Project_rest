@@ -6,12 +6,6 @@ input {
 	caret-color: green !important;
 }
 
-/*hr {
-	border-radius: 2px;
-	height: 2px;
-	background-color: #527908 !important;
-}*/
-
 .bgModal {
 	background-color: rgba(43, 165, 137, 0.45);
 }
@@ -43,28 +37,7 @@ input {
 	background: #527908 !important;
 }
 
-.div1 {
-	height: 20px;
-	background: red;
+.col-let {
+	color: #527908 !important;
 }
 
-.hovAnim {
-	transition: 0.5s;
-}
-
-.hovAnim:hover {
-	transform: scale(1.03,1.03);
-	/*transform: rotate(-5deg);*/
-}
-
-.tra5 {
-	transition: 0.5s;
-}
-
-.hovTar:hover {
-	transform: scale(1.03,1.03);
-}
-
-.icoRes:hover {
-	color: #1cc88a !important;
-}
