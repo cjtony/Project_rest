@@ -71,8 +71,13 @@ switch ($_GET['oper']) {
 			if ($rowStmt === 1) {
 				session_start();
 				$rowDat = $stmt -> fetch(PDO::FETCH_OBJ);
+				$keyCli = $rowDat->id_cliente;
+				$stmtFech = $bd -> prepare("UPDATE clientes SET fech_activ_cli = :fechAc WHERE id_cliente = :keyCli");
+				$stmtFech -> bindParam("fechAc", $fechAc, PDO::PARAM_STR);
+				$stmtFech -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
+				$stmtFech -> execute();
 				if ($rowDat) {
-					$_SESSION['keyCli'] = $rowDat->id_cliente;
+					$_SESSION['keyCli'] = $keyCli;
 					echo 1;
 				} else {
 					echo 3;

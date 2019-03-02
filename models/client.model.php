@@ -29,19 +29,50 @@ class Client {
 		}
 	}
 
-	public function menuCat($param) {
+	public function menuCat($clv) {
 		try {
 			$bd = new Connect();
 			$bd = $bd -> getDB();
-			$stmt = $bd -> prepare("SELECT * FROM categoria WHERE id_categoria = :param");
-			$stmt -> bindParam("param", $param, PDO::PARAM_INT);
+			$stmt = $bd -> prepare("SELECT * FROM categoria WHERE id_categoria = :clv");
+			$stmt -> bindParam("clv", $clv, PDO::PARAM_INT);
 			$stmt -> execute();
 			$data = $stmt -> fetch(PDO::FETCH_OBJ);
 			return $data;
 		} catch (PDOException $e) {
 			echo '{"error":{"text":'. $e->getMessage() .'}}';
 		} finally {
+			$bd = null; $stmt = null; $data = null;
+		}
+	} 
 
+	public function plaMenu($clv) {
+		try {
+			$bd = new Connect();
+			$bd = $bd -> getDB();
+			$stmt = $bd -> prepare("SELECT * FROM plat_menu pl INNER JOIN categoria ct ON ct.id_categoria = pl.id_categoria WHERE ct.id_categoria = :clv");
+			$stmt -> bindParam("clv", $clv, PDO::PARAM_INT);
+			$stmt -> execute();
+			return $stmt;
+		} catch (PDOException $e) {
+			echo '{"error":{"text":'. $e->getMessage() .'}}';
+		} finally {
+			$bd = null; $stmt = null;
+		}
+	}
+
+	public function detailsPlat($clv) {
+		try {
+			$bd = new Connect();
+			$bd = $bd -> getDB();
+			$stmt = $bd -> prepare("SELECT * FROM plat_menu pl INNER JOIN categoria ct ON ct.id_categoria = pl.id_categoria WHERE pl.id_platillo = :clv");
+			$stmt -> bindParam("clv", $clv, PDO::PARAM_INT);
+			$stmt -> execute();
+			$data = $stmt -> fetch(PDO::FETCH_OBJ);
+			return $data;
+		} catch (PDOException $e) {
+			echo '{"error":{"text":'. $e->getMessage() .'}}';
+		} finally {
+			$bd = null; $stmt = null;
 		}
 	}
 

@@ -79,8 +79,13 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
         <li class="nav-item ml-3">
           <a class="nav-link font-weight-bold" href="<?php echo SERVERURLCLI; ?>MyOrders/">Mis pedidos</a>
         </li>
-        <li class="nav-item ml-3">
-          <a class="nav-link font-weight-bold" href="<?php echo SERVERURLCLI; ?>MyOrders/">Mi carrito</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Mi carrito
+            <sup><span class="badge badge-pill badge-danger" id="cantcar"></span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="listcar">
+          </div>
         </li>
         <li class="nav-item ml-3">
           <a class="nav-link font-weight-bold" href="<?php echo SERVERURLCLI; ?>cli/Logout.php">Salir</a>
