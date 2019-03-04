@@ -80,6 +80,50 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
 
 			break;
 
+		case 'mostpre':
+			
+			try {
+				$stmt = $bd -> prepare("SELECT SUM(pt.precio_plat) AS 'Total' FROM carrito cr INNER JOIN plat_menu pt ON pt.id_platillo = cr.id_platillo INNER JOIN clientes cl ON cl.id_cliente = cr.id_cliente INNER JOIN categoria ct ON ct.id_categoria = pt.id_categoria WHERE cl.id_cliente = :keyCli && cr.estad_car = :valid");
+				$stmt -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
+				$stmt -> bindParam("valid", $valid, PDO::PARAM_INT);
+				$stmt -> execute();
+				$salida = "";
+				$resstmt = $stmt -> rowCount();
+				$dat = $stmt -> fetch(PDO::FETCH_OBJ);
+				if ($dat->Total != Null){
+					$salida .= "
+							<span class='badge badge-primary'>Total: $".$dat->Total."</span>";
+				}
+				echo $salida;
+			} catch (PDOException $e) {
+				echo $e->getMessage();
+			} finally {
+				$bd = null; $stmt = null; $resstmt = null; $salida = null;
+			}
+
+			break;
+
+        case 'mostord':
+			
+			try {
+				$stmt = $bd -> prepare("SELECT * FROM carrito cr INNER JOIN plat_menu pt ON pt.id_platillo = cr.id_platillo INNER JOIN clientes cl ON cl.id_cliente = cr.id_cliente INNER JOIN categoria ct ON ct.id_categoria = pt.id_categoria WHERE cl.id_cliente = :keyCli && cr.estad_car = :valid");
+				$stmt -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
+				$stmt -> bindParam("valid", $valid, PDO::PARAM_INT);
+				$stmt -> execute();
+				$salida = "";
+				$resstmt = $stmt -> rowCount();
+				if ($resstmt > 0){
+					$salida .= '<a href="'.SERVERURLCLI.'OrderComp/" class="nav-link font-weight-bold text-success" id="mostord">Ordenar</a>';
+				}
+				echo $salida;
+			} catch (PDOException $e) {
+				echo $e->getMessage();
+			} finally {
+				$bd = null; $stmt = null; $resstmt = null; $salida = null;
+			}
+
+			break;
+
 		case 'cantcar':
 			
 			try {
@@ -118,6 +162,53 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
 				echo $e->getMessage();
 			} finally {
 				$bd = null; $stmt = null;
+			}
+
+			break;
+
+		case 'ordcar':
+			
+			try {
+				$stmt = $bd -> prepare("SELECT * FROM carrito cr INNER JOIN plat_menu pt ON pt.id_platillo = cr.id_platillo  INNER JOIN clientes cl ON cl.id_cliente = cr.id_cliente INNER JOIN categoria ct ON ct.id_categoria = pt.id_categoria WHERE cl.id_cliente = :keyCli && cr.estad_car = :valid");
+				$stmt -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
+				$stmt -> bindParam("valid", $valid, PDO::PARAM_INT);
+				$stmt -> execute();
+				$salida = "";
+				$resstmt = $stmt -> rowCount();
+				if ($resstmt > 0){
+					while ($dat = $stmt -> fetch(PDO::FETCH_OBJ)) {
+						$salida .= '
+							<div class="col-sm-6">
+								<div class="card shadow mb-4 p-3">
+									<i class="fas fa-circle text-primary mb-3"></i>
+									<div class="text-center mb-3">
+										<img src="'.SERVERURL.'/fotmenu/'.$dat->imagen_plat1.'" class="rounded img-fluid" width="130" />
+									</div>
+									<div class="card-header text-center h5">'.$dat->nombre_plat.'</div>
+									<div class="card-body">
+										<b>Descripción:</b>
+										<p class="text-muted mt-2">'.$dat->descripcion_plat.'</p>
+									</div>
+									<div class="row">
+										<div class="col-sm-6 text-center">
+											<b><span class="badge badge-primary">'.$dat->nombre_cat.'</span> </b> 
+										</div>
+										<div class="col-sm-6 text-center">
+											<b>Precio: <span class="badge badge-primary">$'.$dat->precio_plat.'</span> </b> 
+										</div>
+									</div>
+								</div>
+							</div>
+						' ;
+					}
+				} else {
+					$salida .= '';
+				}
+				echo $salida;
+			} catch (PDOException $e) {
+				echo $e->getMessage();
+			} finally {
+				$bd = null; $stmt = null; $resstmt = null; $salida = null;
 			}
 
 			break;

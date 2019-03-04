@@ -4,6 +4,26 @@ document.addEventListener('DOMContentLoaded', () => {
 	const addCarr = document.getElementById('addCarr');
 	const carradd = document.getElementById('carradd');
 
+	carordern = () => {
+        $.ajax({
+          	url : '<?php echo SERVERURL; ?>ajax/peticcli/funccarcom.php?oper=mostord',
+          	type : "POST",
+          	success : ( data ) => {
+            	$('#mostord').html(data);
+          	}
+        });
+      }
+
+	carprecie = () => {
+        $.ajax({
+          	url : './../../../ajax/peticcli/funccarcom.php?oper=mostpre',
+          	type : "POST",
+          	success : ( data ) => {
+            	$('#mostpre').html(data);
+          	}
+        });
+    }
+
 	carcarrit = () => {
 		$.ajax({
 			url : '../../../../ajax/peticcli/funccarcom.php?oper=mostcar',
@@ -30,6 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			( resp ) => {
 				carcarrit();
 				cancarrit();
+				carprecie();
+				carordern();
 			});
 	}
 
@@ -48,6 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
 					}, 1500);
 					carcarrit();
 					cancarrit();
+					carprecie();
+					carordern();
 				} else if (resp == 0) {
 					location.reload()
 				} else {
@@ -59,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	carcarrit();
 	cancarrit();
-
-
+	carprecie();
+	carordern();
 
 });

@@ -37,7 +37,7 @@ $dataPla = $climodel -> plaMenu($valrecib);
 				    	<p class="card-text text-justify">
 				    		<?php echo $dat -> descripcion_plat; ?>
 				    	</p>
-				    	<a href="<?php echo SERVERURLCLI; ?>DetPlat/<?php echo $dat->id_platillo; ?>/<?php echo $valrecib; ?>/" class="btn btn-primary text-white">Ordenar!</a>
+				    	<a href="<?php echo SERVERURLCLI; ?>DetPlat/<?php echo $dat->id_platillo; ?>/<?php echo $valrecib; ?>/" class="btn btn-primary text-white">Ver detalles!</a>
 				  	</div>
 				</div>
 			</div>

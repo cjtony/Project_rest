@@ -1,6 +1,7 @@
 <?php 
 
 $datCat = $climodel -> catDetails();
+$datPla = $climodel -> menuPri();
 
 ?>
 
@@ -18,58 +19,25 @@ $datCat = $climodel -> catDetails();
 	</div>
 
 	<div class="row mt-5">
-		<div class="col-sm-3 mt-3 mb-3">
-			<div class="card p-3">
-			  	<img src="<?php echo SERVERURL; ?>assets/img/hamburger.jpg" class="card-img-top rounded shadow" alt="hamburguesa">
-			  	<div class="card-body text-center">
-			    	<h5 class="card-title">Hamburguesa</h5>
-			    	<hr>
-			    	<p class="card-text text-justify">
-			    		La calidad de nuestra hamburguesa es de las mejores en la región sur del estado de México.
-			    	</p>
-			    	<a href="#" class="btn col-btn text-white">Mas detalles</a>
-			  	</div>
+		<?php 
+			while ($dat = $datPla -> fetch(PDO::FETCH_OBJ)) {
+		?>
+			<div class="col-sm-3 mt-3 mb-3">
+				<div class="card p-3">
+				  	<img src="<?php echo SERVERURL; ?>fotmenu/<?php echo $dat->imagen_plat1; ?>" class="card-img-top rounded shadow" alt="hamburguesa">
+				  	<div class="card-body text-center">
+				    	<h5 class="card-title"><?php echo $dat->nombre_plat; ?></h5>
+				    	<hr>
+				    	<p class="card-text text-justify">
+				    		<?php echo $dat->descripcion_plat; ?>
+				    	</p>
+				    	<a href="<?php echo SERVERURLCLI; ?>DetPlat/<?php echo $dat->id_platillo; ?>/<?php echo $dat->id_categoria; ?>/" class="btn btn-primary text-white">Mas detalles</a>
+				  	</div>
+				</div>
 			</div>
-		</div>
-		<div class="col-sm-3 mt-3 mb-3">
-			<div class="card p-3">
-			  	<img src="<?php echo SERVERURL; ?>assets/img/hamburger.jpg" class="card-img-top rounded shadow" alt="hamburguesa">
-			  	<div class="card-body text-center">
-			    	<h5 class="card-title">Hamburguesa</h5>
-			    	<hr>
-			    	<p class="card-text text-justify">
-			    		La calidad de nuestra hamburguesa es de las mejores en la región sur del estado de México.
-			    	</p>
-			    	<a href="#" class="btn col-btn text-white">Mas detalles</a>
-			  	</div>
-			</div>
-		</div>
-		<div class="col-sm-3 mt-3 mb-3">
-			<div class="card p-3">
-			  	<img src="<?php echo SERVERURL; ?>assets/img/hamburger.jpg" class="card-img-top rounded shadow" alt="hamburguesa">
-			  	<div class="card-body text-center">
-			    	<h5 class="card-title">Hamburguesa</h5>
-			    	<hr>
-			    	<p class="card-text text-justify">
-			    		La calidad de nuestra hamburguesa es de las mejores en la región sur del estado de México.
-			    	</p>
-			    	<a href="#" class="btn col-btn text-white">Mas detalles</a>
-			  	</div>
-			</div>
-		</div>
-		<div class="col-sm-3 mt-3 mb-3">
-			<div class="card p-3">
-			  	<img src="<?php echo SERVERURL; ?>assets/img/hamburger.jpg" class="card-img-top rounded shadow" alt="hamburguesa">
-			  	<div class="card-body text-center">
-			    	<h5 class="card-title">Hamburguesa</h5>
-			    	<hr>
-			    	<p class="card-text text-justify">
-			    		La calidad de nuestra hamburguesa es de las mejores en la región sur del estado de México.
-			    	</p>
-			    	<a href="#" class="btn col-btn text-white">Mas detalles</a>
-			  	</div>
-			</div>
-		</div>
+		<?php
+			}
+		?>
 	</div>
 
 	<h2 class="text-center mt-5 font-weight-bold col-let">
@@ -123,5 +91,5 @@ $datCat = $climodel -> catDetails();
 			?>
 		</div>
 	</div>
-
 </div>
+

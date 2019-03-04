@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				});
 				divGod.classList.add('d-none'); 
 				btnReg.disabled = false;
-			},1000);
+			},5000);
 		} else {
 			divErr.classList.remove('d-none');
 			setTimeout(() => {

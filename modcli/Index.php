@@ -79,13 +79,20 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
         <li class="nav-item ml-3">
           <a class="nav-link font-weight-bold" href="<?php echo SERVERURLCLI; ?>MyOrders/">Mis pedidos</a>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown ml-3">
           <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Mi carrito
             <sup><span class="badge badge-pill badge-danger" id="cantcar"></span>
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="listcar">
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="listcar">            
           </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link font-weight-bold" id="mostpre">
+          </a>
+        </li>
+        <li class="nav-item" id="mostord">
+          
         </li>
         <li class="nav-item ml-3">
           <a class="nav-link font-weight-bold" href="<?php echo SERVERURLCLI; ?>cli/Logout.php">Salir</a>
@@ -143,6 +150,68 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
   <!-- Custom scripts for all pages-->
   <script src="<?php echo SERVERURL; ?>assets/js/sb-admin-2.min.js"></script>
 
+  
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+
+      carordern = () => {
+        $.ajax({
+          url : '<?php echo SERVERURL; ?>ajax/peticcli/funccarcom.php?oper=mostord',
+          type : "POST",
+          success : ( data ) => {
+            $('#mostord').html(data);
+          }
+        });
+      }
+
+      carprecie = () => {
+        $.ajax({
+          url : '<?php echo SERVERURL; ?>ajax/peticcli/funccarcom.php?oper=mostpre',
+          type : "POST",
+          success : ( data ) => {
+            $('#mostpre').html(data);
+          }
+        });
+      }
+
+      carcarrit = () => {
+        $.ajax({
+          url : '<?php echo SERVERURL; ?>ajax/peticcli/funccarcom.php?oper=mostcar',
+          type : "POST",
+          success : ( data ) => {
+            $('#listcar').html(data);
+          }
+        });
+      }
+
+      cancarrit = () => {
+        $.ajax({
+          url : '<?php echo SERVERURL; ?>ajax/peticcli/funccarcom.php?oper=cantcar',
+          type : "POST",
+          success : ( data ) => {
+            $('#cantcar').text(data);
+          }
+        });
+      }
+
+      elimcar = ( param ) => {
+        $.post("<?php echo SERVERURL; ?>ajax/peticcli/funccarcom.php?oper=elimcar",
+          {param : param},
+          ( resp ) => {
+            carcarrit();
+            cancarrit();
+            carprecie();
+            carordern();
+          });
+      }
+
+      carcarrit();
+      cancarrit();
+      carprecie();
+      carordern();
+
+    });
+  </script>
   
 </body>
 
