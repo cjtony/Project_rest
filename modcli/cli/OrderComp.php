@@ -3,7 +3,6 @@
 $datCar = $climodel -> orderComp($keyCli,1);
 $datDir = $climodel -> direccCli($keyCli);
 
-
 ?>
 
 <div class="container-fluid animated fadeIn delay-1s mt-4">
@@ -45,6 +44,28 @@ $datDir = $climodel -> direccCli($keyCli);
 						<div class="form-group mb-4">
 							<label for="pascon" class="text-primary font-weight-bold">Introduce tu contraseña para confirmar el pedido</label>
 							<input type="password" id="pasCon" name="pasCon" class="form-control">
+						</div>
+						<div class="text-center border-left-success text-success mb-5 rounded d-none" id="divSus">
+							<span>
+								Tu pedido ha sido enviado con exito!... en breve se te notificara la confirmación del pedido.
+							</span>
+							<br><br>
+							<b>Redireccionando...</b>
+						</div>
+						<div class="text-center border-left-danger text-danger mb-5 rounded d-none" id="divFal">
+							<span>
+								Fallo al registrar el pedido, intentelo más tarde...
+							</span>
+						</div>
+						<div class="text-center border-left-warning text-warning mb-5 rounded d-none" id="divPas">
+							<span>
+								Contraseña incorrecta...
+							</span>
+						</div>
+						<div class="text-center border-left-danger text-danger mb-5 rounded d-none" id="divErr">
+							<span>
+								Completa todos los campos...
+							</span>
 						</div>
 						<div class="text-center mb-4">
 							<button class="btn btn-primary btn-sm" id="btnEnv">

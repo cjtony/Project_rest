@@ -13,9 +13,18 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
 	$fechAc = date("Y-m-d");
 	$valid = 1;
 	$confirm = 0;
+	$fechhor = date("Y-m-d H:i:s");
 
 	$bd = new Connect();
 	$bd = $bd -> getDB();
+
+	function generarCodigo($longitud) {
+		$key = '';
+		$pattern = '1234567890abcdefghijklmnopqrstuvwxyz';
+		$max = strlen($pattern)-1;
+		for($i=0;$i < $longitud;$i++) $key .= $pattern{mt_rand(0,$max)};
+		return 'PED'.$key;
+	}
 
 	switch ($_GET['oper']) {
 
@@ -24,6 +33,7 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
 			$dirEnv = isset($_POST['dirEnv']) ? trim($_POST['dirEnv']) : "";
 			$pasCon = isset($_POST['pasCon']) ? trim($_POST['pasCon']) : "";
 			$pasConEn = sha1($pasCon);
+			$codconf = generarCodigo(6);
 
 			try {
 				$confvalid = $bd -> prepare("SELECT * FROM clientes WHERE id_cliente = :keyCli && password = :pasConEn");
@@ -36,19 +46,34 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
 					$stmt -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
 					$stmt -> bindParam("valid", $valid, PDO::PARAM_INT);
 					$stmt -> execute();
-					while ($dat = $stmt -> fetch(PDO::FETCH_OBJ)) {
-						$id_carr = $dat -> id_carrito;
-						$upd = $bd -> prepare("UPDATE carrito SET estad_car = :confirm WHERE id_carrito = :id_carr && id_cliente = :keyCli");
-						$upd -> bindParam("confirm", $confirm, PDO::PARAM_INT);
-						$upd -> bindParam("id_carr", $id_carr, PDO::PARAM_INT);
-						$upd -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
-						$upd -> execute();
-						if ($upd) {
-							echo "bien";
+					if ($stmt -> rowCount() > 0) {
+						while ($dat = $stmt -> fetch(PDO::FETCH_OBJ)) {
+							$id_carr = $dat -> id_carrito;
+							$ins = $bd -> prepare("INSERT INTO det_pedido (id_carrito, id_direccion, confirm_ped, fecha_hora_ped, cod_conf) VALUES (:id_carr, :dirEnv, :valid, :fechhor, :codconf)");
+							$ins -> bindParam("id_carr", $id_carr, PDO::PARAM_INT);
+							$ins -> bindParam("dirEnv", $dirEnv, PDO::PARAM_INT);
+							$ins -> bindParam("valid", $valid, PDO::PARAM_INT);
+							$ins -> bindParam("fechhor", $fechhor, PDO::PARAM_STR);
+							$ins -> bindParam("codconf", $codconf, PDO::PARAM_INT);
+							$ins -> execute();
+							if ($ins) {
+								$upd = $bd -> prepare("UPDATE carrito SET estad_car = :confirm WHERE id_carrito = :id_carr && id_cliente = :keyCli");
+								$upd -> bindParam("confirm", $confirm, PDO::PARAM_INT);
+								$upd -> bindParam("id_carr", $id_carr, PDO::PARAM_INT);
+								$upd -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
+								$upd -> execute();
+								if ($upd) {
+									echo "bien";
+								}
+							} else {
+								echo "";
+							}
 						}
+					} else {
+						echo 0;
 					}
 				} else {
-					echo "mal password";
+					echo 2;
 				}
 			} catch (PDOException $e) {
 				echo $e->getMessage();

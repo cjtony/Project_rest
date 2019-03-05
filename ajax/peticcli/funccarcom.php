@@ -127,8 +127,9 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
 		case 'cantcar':
 			
 			try {
-				$stmt = $bd -> prepare("SELECT COUNT(id_carrito) as 'Cantidad' FROM carrito WHERE id_cliente = :keyCli");
+				$stmt = $bd -> prepare("SELECT COUNT(id_carrito) as 'Cantidad' FROM carrito WHERE id_cliente = :keyCli && estad_car = :valid");
 				$stmt -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
+				$stmt -> bindParam("valid", $valid, PDO::PARAM_INT);
 				$stmt -> execute();
 				$salida = "";
 				$resstmt = $stmt -> rowCount();

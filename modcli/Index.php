@@ -164,6 +164,8 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
         });
       }
 
+      let reloadOrd = setInterval(carordern, 1000);
+
       carprecie = () => {
         $.ajax({
           url : '<?php echo SERVERURL; ?>ajax/peticcli/funccarcom.php?oper=mostpre',
@@ -173,6 +175,8 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
           }
         });
       }
+
+      let reloadPre = setInterval(carprecie, 1000);
 
       carcarrit = () => {
         $.ajax({
@@ -184,6 +188,8 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
         });
       }
 
+      let reloadCar = setInterval(carcarrit, 1000);
+
       cancarrit = () => {
         $.ajax({
           url : '<?php echo SERVERURL; ?>ajax/peticcli/funccarcom.php?oper=cantcar',
@@ -193,6 +199,8 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
           }
         });
       }
+
+      let reloadCan = setInterval(cancarrit, 1000);
 
       elimcar = ( param ) => {
         $.post("<?php echo SERVERURL; ?>ajax/peticcli/funccarcom.php?oper=elimcar",

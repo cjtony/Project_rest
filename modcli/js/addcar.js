@@ -86,4 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	carprecie();
 	carordern();
 
+	let reloadOrd = setInterval(carordern, 1000);
+	let reloadPre = setInterval(carprecie, 1000);
+	let reloadCar = setInterval(carcarrit, 1000);
+	let reloadCan = setInterval(cancarrit, 1000);
+
 });
