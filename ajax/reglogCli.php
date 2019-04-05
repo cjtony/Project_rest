@@ -92,6 +92,44 @@ switch ($_GET['oper']) {
 		}
 
 		break;
+
+	case 'loginadm':
+
+		$userUs = isset($_POST['userUs']) ? trim($_POST['userUs']) : "";
+		$passUs = isset($_POST['passUs']) ? trim($_POST['passUs']) : "";
+		//$passEn = sha1($passUs);
+		$passEn = $passUs;
+
+		try {
+			$stmt = $bd -> prepare("SELECT * FROM admin WHERE usuario_adm = :userUs && password = :passEn");
+			$stmt -> bindParam("userUs", $userUs, PDO::PARAM_STR);
+			$stmt -> bindParam("passEn", $passEn, PDO::PARAM_STR);
+			$stmt -> execute();
+			$rowStmt = $stmt -> rowCount();
+			if ($rowStmt === 1) {
+				session_start();
+				$rowDat = $stmt -> fetch(PDO::FETCH_OBJ);
+				$keyAdm = $rowDat->id_admin;
+				$stmtFech = $bd -> prepare("UPDATE admin SET fech_activ = :fechAc WHERE id_admin = :keyAdm");
+				$stmtFech -> bindParam("fechAc", $fechAc, PDO::PARAM_STR);
+				$stmtFech -> bindParam("keyAdm", $keyAdm, PDO::PARAM_INT);
+				$stmtFech -> execute();
+				if ($rowDat) {
+					$_SESSION['keyAdm'] = $keyAdm;
+					echo 1;
+				} else {
+					echo 3;
+				}
+			} else {
+				echo 2;
+			}
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+		} finally {
+			$bd = null; $stmt = null;
+		}
+
+		break;
 	
 	default:
 		$bd = null;
