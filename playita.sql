@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-04-2019 a las 11:31:59
+-- Tiempo de generación: 07-04-2019 a las 16:17:10
 -- Versión del servidor: 10.1.25-MariaDB
 -- Versión de PHP: 7.1.7
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `id_admin` int(11) NOT NULL,
-  `est_cuenta_adm` tinyint(4) DEFAULT NULL,
+  `est_cuenta_adm` tinyint(4) DEFAULT '1',
   `nombre_adm` varchar(50) DEFAULT NULL,
   `correo_adm` varchar(50) DEFAULT NULL,
   `usuario_adm` varchar(50) DEFAULT NULL,
@@ -45,7 +45,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `est_cuenta_adm`, `nombre_adm`, `correo_adm`, `usuario_adm`, `password`, `privilegio_adm`, `fecha_reg`, `fech_activ`) VALUES
-(1, 1, 'Marco', 'marco@gmail.com', 'tony', '1234', 'ALL', '2019-04-05', '2019-04-05');
+(1, 1, 'Marco', 'marco@gmail.com', 'tony', '81dc9bdb52d04dc20036dbd8313ed055', 'ALL', '2019-04-05', '2019-04-07'),
+(2, 1, 'marc', 'marco2@gmail.com', 'tony', '827ccb0eea8a706c4c34a16891f84e7b', 'LIM', '2019-04-07', NULL);
 
 -- --------------------------------------------------------
 
@@ -107,15 +108,16 @@ CREATE TABLE `clientes` (
   `usuario_cli` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
   `fecha_reg_cli` date DEFAULT NULL,
-  `fech_activ_cli` date DEFAULT NULL
+  `fech_activ_cli` date DEFAULT NULL,
+  `estado_cli` tinyint(1) UNSIGNED ZEROFILL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `clientes`
 --
 
-INSERT INTO `clientes` (`id_cliente`, `nombre_cli`, `telefono_cli`, `correo_cli`, `usuario_cli`, `password`, `fecha_reg_cli`, `fech_activ_cli`) VALUES
-(1, 'Marco aguilar', '7321193748', 'marcocaaguilar@gmail.com', 'tony', '3829486b93ec44395f0b980424bae9b6fb07b7bc', '2019-02-28', '2019-04-02');
+INSERT INTO `clientes` (`id_cliente`, `nombre_cli`, `telefono_cli`, `correo_cli`, `usuario_cli`, `password`, `fecha_reg_cli`, `fech_activ_cli`, `estado_cli`) VALUES
+(1, 'Marco aguilar', '7321193748', 'marcocaaguilar@gmail.com', 'tony', '3829486b93ec44395f0b980424bae9b6fb07b7bc', '2019-02-28', '2019-04-02', 1);
 
 -- --------------------------------------------------------
 
@@ -176,7 +178,7 @@ CREATE TABLE `plat_menu` (
   `nombre_plat` varchar(50) DEFAULT NULL,
   `descripcion_plat` varchar(500) DEFAULT NULL,
   `precio_plat` float DEFAULT NULL,
-  `tiempo_prepare` time DEFAULT NULL,
+  `tiempo_prepare` varchar(50) DEFAULT NULL,
   `imagen_plat1` varchar(100) DEFAULT NULL,
   `imagen_plat2` varchar(100) DEFAULT NULL,
   `estado_plat` tinyint(4) DEFAULT NULL
@@ -187,7 +189,8 @@ CREATE TABLE `plat_menu` (
 --
 
 INSERT INTO `plat_menu` (`id_platillo`, `id_categoria`, `nombre_plat`, `descripcion_plat`, `precio_plat`, `tiempo_prepare`, `imagen_plat1`, `imagen_plat2`, `estado_plat`) VALUES
-(1, 2, 'Hamburguesa jalapeña', 'La mejor hamburguesa con jalapeño que puedes probar', 60, '00:25:00', 'hamburger.jpg', 'hamburger.jpg', 1);
+(1, 2, 'Hamburguesa jalapeña', 'La mejor hamburguesa con jalapeño que puedes probar', 60, '00:25:00', 'hamburger.jpg', 'hamburger.jpg', 1),
+(2, 2, 'Hamburguesa con queso', 'La mejor hamburguesa de queso de todos los tiempos', 45, '20 minutos', 'hamburger.jpg', NULL, 1);
 
 --
 -- Índices para tablas volcadas
@@ -249,7 +252,7 @@ ALTER TABLE `plat_menu`
 -- AUTO_INCREMENT de la tabla `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `carrito`
 --
@@ -259,7 +262,7 @@ ALTER TABLE `carrito`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
@@ -279,7 +282,7 @@ ALTER TABLE `direcciones`
 -- AUTO_INCREMENT de la tabla `plat_menu`
 --
 ALTER TABLE `plat_menu`
-  MODIFY `id_platillo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_platillo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Restricciones para tablas volcadas
 --
