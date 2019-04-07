@@ -6,6 +6,11 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
   header('Location:../');
 } else {
   include '../models/rutas.php';
+  include '../models/admin.model.php';
+  include '../models/connect.php';
+  $keyAdm = $_SESSION['keyAdm'];
+  $admin = new Administrador();
+  $dataAdmin  = $admin -> detailsAdmin($keyAdm);
   function formatFech($fechForm) {
     $fechDat = substr($fechForm, 0,4);
     $fechM = substr($fechForm, 5,2);
@@ -67,34 +72,56 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
         <div id="collapseUpd" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Selecciona:</h6>
-            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>ChangePass/">Contraseña</a>
-            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>ChangeData/">Mis datos</a>
+            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>confPass/">Contraseña</a>
+            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>confData/">Mis datos</a>
           </div>
         </div>
       </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRegisters" aria-expanded="true" aria-controls="collapseRegisters">
-          <i class="fas fa-fw fa-plus"></i>
-          <span>Registrar</span>
+          <i class="fas fa-fw fa-book-open"></i>
+          <span>Menu</span>
         </a>
         <div id="collapseRegisters" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Selecciona:</h6>
-            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>RegFiles/">Archivo</a>
+            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>regCateg/">
+              <i class="fas fa-plus mr-2"></i>
+              Categoría
+            </a>
+            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>regPlat/">
+              <i class="fas fa-plus mr-2"></i>
+              Platillo
+            </a>
           </div>
         </div>
       </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTables" aria-expanded="true" aria-controls="collapseTables">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tablas</span>
+          <i class="fas fa-fw fa-eye"></i>
+          <span>Datos</span>
         </a>
         <div id="collapseTables" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Selecciona:</h6>
-            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>TableFiles/">Archivos</a>
+            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>tableCateg/">
+              <i class="fas fa-table mr-2"></i>
+              Categorias
+            </a>
+            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>tablePlat/">
+              <i class="fas fa-table mr-2"></i>
+              Platillos
+            </a>
+            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>tableEmp/">
+              <i class="fas fa-table mr-2"></i>
+              Empleados
+            </a>
+            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>tableCli/">
+              <i class="fas fa-table mr-2"></i>
+              Clientes
+            </a>
           </div>
         </div>
       </li>
@@ -115,13 +142,12 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
           <i class="fas fa-fw fa-user-tie"></i>
-          <span>Usuarios</span>
+          <span>Empleados</span>
         </a>
         <div id="collapseUsers" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Selecciona:</h6>
-            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>RegUsers/">Registrar</a>
-            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>TableUsers/">Tabla</a>
+            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>regEmp/">Registrar</a>
           </div>
         </div>
       </li>
@@ -148,7 +174,7 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
             <span class="text-danger">Ingresa al menos 3 caracteres</span>
           </div>
 
-          <form method="POST" id="form_search" action="<?php echo SERVERURLADM; ?>ResultsSearch/" autocomplete="off" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <!-- <form method="POST" id="form_search" action="<?php echo SERVERURLADM; ?>ResultsSearch/" autocomplete="off" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
               <input class="form-control bg-light border-0 small" placeholder="Buscar expediente..." aria-label="Search" aria-describedby="basic-addon2" value="" name="search_cli" type="search" id="search_cli">
               <div class="input-group-append">
@@ -157,7 +183,7 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
                 </button>
               </div>
             </div>
-          </form>
+          </form> -->
 
           <ul class="navbar-nav ml-auto">
 
@@ -167,7 +193,7 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
               </a>
               <!-- Dropdown - Messages -->
               <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search" method="POST" id="form_search2" action="<?php echo SERVERURLADM; ?>ResultsSearch/" autocomplete="off">
+                <!-- <form class="form-inline mr-auto w-100 navbar-search" method="POST" id="form_search2" action="<?php echo SERVERURLADM; ?>ResultsSearch/" autocomplete="off">
                   <div class="input-group">
                     <input value="" name="search_cli" type="search" id="search_cli2" class="form-control bg-light border-0 small" placeholder="Buscar expediente..." aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
@@ -176,7 +202,59 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
                       </button>
                     </div>
                   </div>
-                </form>
+                </form> -->
+              </div>
+            </li>
+
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <?php 
+                    $dbc = new Connect();
+                    $dbc = $dbc -> getDB();
+                    $valid = 1;
+                    $countNotif = $dbc -> prepare("SELECT DISTINCTROW dp.cod_conf AS 'COD' FROM det_pedido dp WHERE confirm_ped = :valid");
+                    $countNotif -> bindParam("valid", $valid, PDO::PARAM_INT);
+                    $countNotif -> execute();
+                    $rowCountNotif = $countNotif -> rowCount();
+                ?>
+                    <span class="badge badge-danger badge-counter"> + <?php echo $rowCountNotif; ?></span>
+              </a>
+              <!-- Dropdown - Alerts -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header bg-success border-0">
+                  Pedidos
+                </h6>
+                <?php 
+                  while ( $dn = $countNotif -> fetch(PDO::FETCH_OBJ) ) {
+                    $codigo = $dn -> COD; 
+                    $dataNotif = $dbc -> prepare("SELECT * FROM det_pedido WHERE confirm_ped = :valid && cod_conf = :codigo LIMIT 1");
+                    $dataNotif -> bindParam("valid", $valid, PDO::PARAM_INT);
+                    $dataNotif -> bindParam("codigo", $codigo, PDO::PARAM_STR);
+                    $dataNotif -> execute();
+                    while ($dno = $dataNotif -> fetch(PDO::FETCH_OBJ)) {
+                ?>
+                    <a class="dropdown-item d-flex align-items-center" href="<?php echo SERVERURLADM; ?>detPed/<?php echo $dno->cod_conf; ?>/">
+                      <div class="mr-3">
+                        <div class="icon-circle bg-primary">
+                          <i class="fas fa-file-alt text-white"></i>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="small text-gray-500"><?php echo $dno->fecha_hora_ped; ?></div>
+                        <span class="font-weight-bold">
+                          <b>Codigo de pedido:</b>
+                          <span class="badge badge-success ml-1 mr-1 p-2">
+                            <?php echo $dno->cod_conf; ?>
+                          </span>
+                        </span>
+                      </div>
+                    </a>
+                <?php
+                    }
+                  }
+                ?>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Ver todos los pedidos</a>
               </div>
             </li>
 
@@ -185,7 +263,7 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small text-capitalize font-weight-bold">
-                  Administrador
+                  <?php echo $dataAdmin->usuario_adm; ?>
                 </span>
                   <img src='<?php echo SERVERURL; ?>assets/img/avatar-dhg.png' class="img-profile rounded-circle">
               </a>
