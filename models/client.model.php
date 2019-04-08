@@ -33,7 +33,7 @@ class Client {
 		try {
 			$bd = new Connect();
 			$bd = $bd -> getDB();
-			$stmt = $bd -> prepare("SELECT * FROM plat_menu LIMIT 4");
+			$stmt = $bd -> prepare("SELECT * FROM plat_menu pm INNER JOIN categoria ct ON ct.id_categoria = pm.id_categoria WHERE ct.estado_cat = 1 LIMIT 4");
 			$stmt -> execute();
 			return $stmt;
 		} catch (PDOException $e) {

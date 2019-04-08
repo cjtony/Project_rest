@@ -67,7 +67,7 @@ $valRec = $cod[1];
 				<h6 class="text-left mt-2">
 					Referencia:
 					<b>
-						<?php echo $dped -> direccion_cli; ?>
+						<?php echo $dped -> referencia_cli; ?>
 					</b>
 				</h6>
 				<h6 class="text-left mt-2">

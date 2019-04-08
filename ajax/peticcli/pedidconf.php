@@ -32,7 +32,7 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
 
 			$dirEnv = isset($_POST['dirEnv']) ? trim($_POST['dirEnv']) : "";
 			$pasCon = isset($_POST['pasCon']) ? trim($_POST['pasCon']) : "";
-			$pasConEn = sha1($pasCon);
+			$pasConEn = md5($pasCon);
 			$codconf = generarCodigo(6);
 
 			try {

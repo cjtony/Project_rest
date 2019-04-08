@@ -183,7 +183,7 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
 								<div class="card shadow mb-4 p-3">
 									<i class="fas fa-circle text-primary mb-3"></i>
 									<div class="text-center mb-3">
-										<img src="'.SERVERURL.'/fotmenu/'.$dat->imagen_plat1.'" class="rounded img-fluid" width="130" />
+										<img src="'.SERVERURL.'files/platillos/'.$dat->imagen_plat1.'" class="rounded img-fluid" width="130" />
 									</div>
 									<div class="card-header text-center h5">'.$dat->nombre_plat.'</div>
 									<div class="card-body">
@@ -245,6 +245,7 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
                 $exec -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
                 $exec -> execute();
                 $rowCantNotif = $exec -> rowCount();
+                $salida = '';
                 if ($rowCantNotif > 0) {
                 	$salida = '';
                 	while ($data = $exec -> fetch(PDO::FETCH_OBJ)) {
@@ -270,7 +271,9 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
                 		}
                 	}
                 } else {
-                	echo 0;
+                	echo '<span class="badge badge-info p-2 ml-2 font-weight-bold" style="font-size:13px;">
+						No hay notificaciones
+                	</span>' ;
                 }
                 echo $salida;
 			} catch (PDOException $e) {

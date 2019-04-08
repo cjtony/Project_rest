@@ -3,7 +3,7 @@
 $dbc = new Connect();
 $dbc = $dbc -> getDB();
 $valid = 1;
-$countNotif = $dbc -> prepare("SELECT DISTINCTROW dp.cod_conf AS 'COD' FROM det_pedido dp INNER JOIN carrito cr ON cr.id_carrito = dp.id_carrito = :keyCli");
+$countNotif = $dbc -> prepare("SELECT DISTINCTROW dp.cod_conf AS 'COD' FROM det_pedido dp INNER JOIN carrito cr ON cr.id_carrito = dp.id_carrito WHERE cr.id_cliente = :keyCli");
 $countNotif -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
 $countNotif -> execute();
 
@@ -34,7 +34,7 @@ $countNotif -> execute();
           					$dbc = $dbc -> getDB();
           					while ( $dn = $countNotif -> fetch(PDO::FETCH_OBJ) ) {
                     			$codigo = $dn -> COD;
-                    			$query = $dbc -> prepare("SELECT dp.confirm_ped, dp.fecha_hora_ped, dp.cod_conf, cl.nombre_cli FROM det_pedido dp  INNER JOIN carrito car ON car.id_carrito = dp.id_carrito INNER JOIN plat_menu pm ON pm.id_platillo = car.id_platillo INNER JOIN categoria ct ON ct.id_categoria = pm.id_categoria INNER JOIN clientes cl ON cl.id_cliente = car.id_cliente INNER JOIN direcciones dr ON dr.id_direccion = dp.id_direccion WHERE dp.cod_conf = :codigo LIMIT 1");
+                    			$query = $dbc -> prepare("SELECT dp.confirm_ped, dp.fecha_hora_ped, dp.cod_conf, cl.nombre_cli FROM det_pedido dp  INNER JOIN carrito car ON car.id_carrito = dp.id_carrito INNER JOIN plat_menu pm ON pm.id_platillo = car.id_platillo INNER JOIN categoria ct ON ct.id_categoria = pm.id_categoria INNER JOIN clientes cl ON cl.id_cliente = car.id_cliente INNER JOIN direcciones dr ON dr.id_direccion = dp.id_direccion WHERE dp.cod_conf = :codigo ORDER BY dp.id_detpedido DESC LIMIT 1");
                     			$query -> bindParam("codigo", $codigo, PDO::PARAM_STR);
           						$query -> execute();
           						while ($dt = $query -> fetch(PDO::FETCH_OBJ)) {

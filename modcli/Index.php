@@ -111,6 +111,10 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
               <i class="fas fa-user mr-2"></i>
               Mis datos
             </a>
+            <a class="dropdown-item" href="<?php echo SERVERURLCLI; ?>confDire/">
+              <i class="fas fa-id-card mr-2"></i>
+              Direcciones
+            </a>
           </div>
         </li>
         <li class="nav-item ml-3">

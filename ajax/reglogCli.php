@@ -15,7 +15,7 @@ switch ($_GET['oper']) {
 		$mailUs = isset($_POST['mailUs']) ? trim($_POST['mailUs']) : "";
 		$userUs = isset($_POST['userUs']) ? trim($_POST['userUs']) : "";
 		$passUs = isset($_POST['passUs']) ? trim($_POST['passUs']) : "";
-		$passEn = sha1($passUs);
+		$passEn = md5($passUs);
 		$nameUs = ucfirst($nameUs);
 
 		try {

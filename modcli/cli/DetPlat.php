@@ -17,7 +17,7 @@ $datPla = $climodel -> detailsPlat($valrec);
 			</h3>
 			<hr>
 			<div class="text-center">
-				<img src="<?php echo SERVERURL; ?>fotmenu/<?php echo $datPla->imagen_plat1; ?>" class="rounded img-fluid" width="400" alt="<?php echo $datPla->nombre_plat; ?>">
+				<img src="<?php echo SERVERURL; ?>files/platillos/<?php echo $datPla->imagen_plat1; ?>" class="rounded img-fluid" width="400" alt="<?php echo $datPla->nombre_plat; ?>">
 			</div>
 			<h5 class="text-primary text-center mt-4">
 				Categoria:
@@ -54,11 +54,11 @@ $datPla = $climodel -> detailsPlat($valrec);
 						<span class="text-success"><i class="fas fa-check mr-2"></i>Agregado al carrito</span>
 					</div>
 				</div>
-				<div class="col-sm-6 text-center">
+				<!-- <div class="col-sm-6 text-center">
 					<button class="btn btn-outline-primary">
 						Comprar!
 					</button>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>

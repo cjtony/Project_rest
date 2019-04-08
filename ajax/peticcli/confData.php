@@ -111,7 +111,63 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
 
 			break;
 		
+		case 'direct':
 
+			$direc = isset($_POST['direc']) ? trim($_POST['direc']) : "";
+			$refec = isset($_POST['refec']) ? trim($_POST['refec']) : "";
+			$numext = isset($_POST['numext']) ? trim($_POST['numext']) : "";
+			$numint = isset($_POST['numint']) ? trim($_POST['numint']) : "";
+
+			try {
+				$insert = $dbConexion -> prepare("INSERT INTO direcciones (id_cliente, direccion_cli, referencia_cli, num_ext, num_int) VALUES (:keyCli, :direc, :refec, :numext, :numint)");
+				$insert -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
+				$insert -> bindParam("direc", $direc, PDO::PARAM_STR);
+				$insert -> bindParam("refec", $refec, PDO::PARAM_STR);
+				$insert -> bindParam("numext", $numext, PDO::PARAM_STR);
+				$insert -> bindParam("numint", $numint, PDO::PARAM_STR);
+				$insert -> execute();
+				if ($insert) {
+					echo 1;
+				} else {
+					echo "Fallo en el registro de la dirección";
+				}
+			} catch (PDOException $e) {
+				echo $e->getMessage();
+			} finally {
+				$dbConexion = null;
+			}
+
+			break;
+
+		case 'editdirect':
+
+			$id_dir = isset($_POST['id_dir']) ? trim($_POST['id_dir']) : "";
+			$direc = isset($_POST['direc']) ? trim($_POST['direc']) : "";
+			$refec = isset($_POST['refec']) ? trim($_POST['refec']) : "";
+			$numext = isset($_POST['numext']) ? trim($_POST['numext']) : "";
+			$numint = isset($_POST['numint']) ? trim($_POST['numint']) : "";
+
+			try {
+				$update = $dbConexion -> prepare("UPDATE direcciones SET direccion_cli = :direc, referencia_cli = :refec, num_ext = :numext, num_int = :numint WHERE id_direccion = :id_dir && id_cliente = :keyCli");
+				$update -> bindParam("direc", $direc, PDO::PARAM_STR);
+				$update -> bindParam("refec", $refec, PDO::PARAM_STR);
+				$update -> bindParam("numext", $numext, PDO::PARAM_STR);
+				$update -> bindParam("numint", $numint, PDO::PARAM_STR);
+				$update -> bindParam("id_dir", $id_dir, PDO::PARAM_INT);
+				$update -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
+				$update -> execute();
+				if ($update) {
+					echo 1;
+				} else {
+					echo "Fallo en la actualización de la dirección";
+				}
+			} catch (PDOException $e) {
+				echo $e->getMessage();
+			} finally {
+				$dbConexion = null;
+			}
+
+			break;
 		
 		default:
 			$dbConexion = null;

@@ -24,7 +24,7 @@ $datPla = $climodel -> menuPri();
 		?>
 			<div class="col-sm-3 mt-3 mb-3">
 				<div class="card p-3">
-				  	<img src="<?php echo SERVERURL; ?>fotmenu/<?php echo $dat->imagen_plat1; ?>" class="card-img-top rounded shadow" alt="hamburguesa">
+				  	<img src="<?php echo SERVERURL; ?>files/platillos/<?php echo $dat->imagen_plat1; ?>" class="card-img-top rounded shadow" alt="hamburguesa">
 				  	<div class="card-body text-center">
 				    	<h5 class="card-title"><?php echo $dat->nombre_plat; ?></h5>
 				    	<hr>
