@@ -11,6 +11,7 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
   $keyAdm = $_SESSION['keyAdm'];
   $admin = new Administrador();
   $dataAdmin  = $admin -> detailsAdmin($keyAdm);
+  $fechAct = date("Y-m-d");
   function formatFech($fechForm) {
     $fechDat = substr($fechForm, 0,4);
     $fechM = substr($fechForm, 5,2);
@@ -74,6 +75,7 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
             <h6 class="collapse-header">Selecciona:</h6>
             <a class="collapse-item" href="<?php echo SERVERURLADM; ?>confPass/">Contraseña</a>
             <a class="collapse-item" href="<?php echo SERVERURLADM; ?>confData/">Mis datos</a>
+
           </div>
         </div>
       </li>
@@ -122,11 +124,15 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
               <i class="fas fa-table mr-2"></i>
               Clientes
             </a>
+            <a class="collapse-item" href="<?php echo SERVERURLADM; ?>tablePed/">
+              <i class="fas fa-table mr-2"></i>
+              Pedidos
+            </a>
           </div>
         </div>
       </li>
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNumbers" aria-expanded="true" aria-controls="collapseNumbers">
           <i class="fas fa-fw fa-chart-bar"></i>
           <span>Numeros</span>
@@ -137,7 +143,7 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
             <a class="collapse-item" href="<?php echo SERVERURLADM; ?>RegistersNumbers/">Principal</a>
           </div>
         </div>
-      </li>
+      </li> -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
@@ -213,8 +219,9 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
                     $dbc = new Connect();
                     $dbc = $dbc -> getDB();
                     $valid = 1;
-                    $countNotif = $dbc -> prepare("SELECT DISTINCTROW dp.cod_conf AS 'COD' FROM det_pedido dp WHERE confirm_ped = :valid");
+                    $countNotif = $dbc -> prepare("SELECT DISTINCTROW dp.cod_conf AS 'COD' FROM det_pedido dp WHERE confirm_ped = :valid && DATE(fecha_hora_ped) = :fechAct");
                     $countNotif -> bindParam("valid", $valid, PDO::PARAM_INT);
+                    $countNotif -> bindParam("fechAct", $fechAct, PDO::PARAM_STR);
                     $countNotif -> execute();
                     $rowCountNotif = $countNotif -> rowCount();
                 ?>
@@ -228,9 +235,10 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
                 <?php 
                   while ( $dn = $countNotif -> fetch(PDO::FETCH_OBJ) ) {
                     $codigo = $dn -> COD; 
-                    $dataNotif = $dbc -> prepare("SELECT * FROM det_pedido WHERE confirm_ped = :valid && cod_conf = :codigo LIMIT 1");
+                    $dataNotif = $dbc -> prepare("SELECT * FROM det_pedido WHERE confirm_ped = :valid && cod_conf = :codigo && DATE(fecha_hora_ped) = :fechAct LIMIT 1");
                     $dataNotif -> bindParam("valid", $valid, PDO::PARAM_INT);
                     $dataNotif -> bindParam("codigo", $codigo, PDO::PARAM_STR);
+                    $dataNotif -> bindParam("fechAct", $fechAct, PDO::PARAM_STR);
                     $dataNotif -> execute();
                     while ($dno = $dataNotif -> fetch(PDO::FETCH_OBJ)) {
                 ?>
@@ -254,7 +262,7 @@ if ($_SESSION['keyAdm'] == "" || $_SESSION['keyAdm'] == null) {
                     }
                   }
                 ?>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Ver todos los pedidos</a>
+                <a class="dropdown-item text-center small text-gray-500" href="<?php echo SERVERURLADM; ?>tablePed/">Ver todos los pedidos</a>
               </div>
             </li>
 

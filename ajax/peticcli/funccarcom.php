@@ -214,6 +214,73 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
 
 			break;
 
+		case 'cantNotif':
+			try {
+                $confirm = 0;
+                $exec = $bd -> prepare("SELECT DISTINCTROW dp.cod_conf FROM det_pedido dp INNER JOIN carrito cr ON cr.id_carrito = dp.id_carrito INNER JOIN clientes cl ON cl.id_cliente = cr.id_cliente WHERE dp.confirm_ped = :confirm && DATE(dp.fecha_hora_ped) = :fechAc && cl.id_cliente = :keyCli");
+                $exec -> bindParam("confirm", $confirm, PDO::PARAM_INT);
+                $exec -> bindParam("fechAc", $fechAc, PDO::PARAM_STR);
+                $exec -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
+                $exec -> execute();
+                $rowCantNotif = $exec -> rowCount();
+                if ($rowCantNotif > 0) {
+                	echo $rowCantNotif;
+                } else {
+                	echo 0;
+                }
+			} catch (PDOException $e) {
+				echo $e-getMessage();
+			} finally {
+				$bd = null;
+			}
+			break;
+
+		case 'listNotif':
+			
+			try {
+				$confirm = 0;
+                $exec = $bd -> prepare("SELECT DISTINCTROW dp.cod_conf AS 'COD' FROM det_pedido dp INNER JOIN carrito cr ON cr.id_carrito = dp.id_carrito INNER JOIN clientes cl ON cl.id_cliente = cr.id_cliente WHERE dp.confirm_ped = :confirm && DATE(dp.fecha_hora_ped) = :fechAc && cl.id_cliente = :keyCli");
+                $exec -> bindParam("confirm", $confirm, PDO::PARAM_INT);
+                $exec -> bindParam("fechAc", $fechAc, PDO::PARAM_STR);
+                $exec -> bindParam("keyCli", $keyCli, PDO::PARAM_INT);
+                $exec -> execute();
+                $rowCantNotif = $exec -> rowCount();
+                if ($rowCantNotif > 0) {
+                	$salida = '';
+                	while ($data = $exec -> fetch(PDO::FETCH_OBJ)) {
+                		$codigo = $data->COD;
+                		$result = $bd -> prepare("SELECT * FROM det_pedido WHERE cod_conf = :codigo LIMIT 1");
+                		$result -> bindParam("codigo", $codigo, PDO::PARAM_STR);
+                		$result -> execute();
+                		while ($dt = $result -> fetch(PDO::FETCH_OBJ)) {
+                			$salida .= '
+								<a class="dropdown-item font-weight-bold" href="'.SERVERURLCLI.'detOrder/'.$dt->cod_conf.'/">
+					              <span class="badge badge-primary p-2">
+					              	El pedido
+					              	'.$dt->cod_conf.'
+					              </span>
+					              <div class="text-center mt-1">
+									<small class="ml-0 pl-0 mr-2 font-weight-bold">
+										<i class="fas fa-check mr-2 text-primary"></i>Fue confirmado.
+									</small>
+					              </div>
+					            </a>
+					            <div class="dropdown-divider"></div>
+							' ;
+                		}
+                	}
+                } else {
+                	echo 0;
+                }
+                echo $salida;
+			} catch (PDOException $e) {
+				echo $e->getMessage();
+			} finally {
+				$bd = null;
+			}
+
+			break;
+
 		default:
 			$bd = null;
 			break;

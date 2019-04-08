@@ -36,17 +36,13 @@
                 </div>
                 <div class="text-center mt-4 mb-4 rounded border-left-success d-none" id="divSus">
                   <span class="text-success font-weight-bold">
-                    Registro correcto! redireccionando...
+                    Inicio de sesión correcto! redireccionando...
                   </span>
                 </div>
                 <button id="btnIni" class="btn col-btn text-white btn-user btn-block mt-5">
                   Iniciar sesión
                 </button>
               </form>
-              <hr>
-              <div class="text-center mt-4">
-                <a class="small" href="<?php echo SERVERURL; ?>Register/">Crear una cuenta</a>
-              </div>
             </div>
           </div>
         </div>

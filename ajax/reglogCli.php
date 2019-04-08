@@ -60,7 +60,7 @@ switch ($_GET['oper']) {
 
 		$userUs = isset($_POST['userUs']) ? trim($_POST['userUs']) : "";
 		$passUs = isset($_POST['passUs']) ? trim($_POST['passUs']) : "";
-		$passEn = sha1($passUs);
+		$passEn = md5($passUs);
 
 		try {
 			$stmt = $bd -> prepare("SELECT * FROM clientes WHERE usuario_cli = :userUs && password = :passEn");
@@ -97,8 +97,8 @@ switch ($_GET['oper']) {
 
 		$userUs = isset($_POST['userUs']) ? trim($_POST['userUs']) : "";
 		$passUs = isset($_POST['passUs']) ? trim($_POST['passUs']) : "";
-		//$passEn = sha1($passUs);
-		$passEn = $passUs;
+		$passEn = md5($passUs);
+		//$passEn = $passUs;
 
 		try {
 			$stmt = $bd -> prepare("SELECT * FROM admin WHERE usuario_adm = :userUs && password = :passEn");

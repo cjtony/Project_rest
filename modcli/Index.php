@@ -12,7 +12,7 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
   $keyCli = $_SESSION['keyCli'];
 
   $climodel = new Client();
-
+  $fechAct = date("Y-m-d");
   function formatFech($fechForm) {
     $fechDat = substr($fechForm, 0,4);
     $fechM = substr($fechForm, 5,2);
@@ -70,12 +70,16 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
         <li class="nav-item ml-3">
           <a class="nav-link font-weight-bold" href="<?php echo SERVERURLCLI; ?>Menu/">Menu</a>
         </li>
-        <li class="nav-item ml-3">
-          <a class="nav-link font-weight-bold" href="#">
+        <li class="nav-item dropdown ml-3">
+          <a class="nav-link dropdown-toggle font-weight-bold"href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
             Notificaciones
-            <sup><span class="badge badge-pill badge-danger">2</span>
+            <sup>
+              <span class="badge badge-pill badge-danger" id="cantNotif"></span>
           </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown1" id="listNotif">            
+          </div>
         </li>
+
         <li class="nav-item ml-3">
           <a class="nav-link font-weight-bold" href="<?php echo SERVERURLCLI; ?>MyOrders/">Mis pedidos</a>
         </li>
@@ -93,6 +97,21 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
         </li>
         <li class="nav-item" id="mostord">
           
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Mi cuenta
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+            <a class="dropdown-item" href="<?php echo SERVERURLCLI; ?>confPass/">
+              <i class="fas fa-key mr-2"></i>
+              Contraseña
+            </a>
+            <a class="dropdown-item" href="<?php echo SERVERURLCLI; ?>confData/">
+              <i class="fas fa-user mr-2"></i>
+              Mis datos
+            </a>
+          </div>
         </li>
         <li class="nav-item ml-3">
           <a class="nav-link font-weight-bold" href="<?php echo SERVERURLCLI; ?>cli/Logout.php">Salir</a>
@@ -153,6 +172,30 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
   
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', () => {
+
+      cantNotif = () => {
+        $.ajax({
+          url : '<?php echo SERVERURL; ?>ajax/peticcli/funccarcom.php?oper=cantNotif',
+          type : "POST",
+          success : ( data ) => {
+            $('#cantNotif').html(data);
+          }
+        });
+      }
+
+      let reloadCantNotif = setInterval(cantNotif, 1000);
+
+      listNotif = () => {
+        $.ajax({
+          url : '<?php echo SERVERURL; ?>ajax/peticcli/funccarcom.php?oper=listNotif',
+          type : "POST",
+          success : ( data ) => {
+            $('#listNotif').html(data);
+          }
+        });
+      }
+
+      let reloadListNotif = setInterval(listNotif, 1000);
 
       carordern = () => {
         $.ajax({
@@ -217,6 +260,8 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
       cancarrit();
       carprecie();
       carordern();
+      cantNotif();
+      listNotif();
 
     });
   </script>

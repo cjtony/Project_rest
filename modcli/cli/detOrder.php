@@ -25,7 +25,7 @@ $valRec = $cod[1];
 					while ($dp = $dataPed -> fetch(PDO::FETCH_OBJ)) {
 				?>
 					<div class="col-sm-6 p-2">
-						<div class="border rounded border-success shadow p-2 bg-white">
+						<div class="border rounded border-primary shadow p-2 bg-white">
 							<h5 class="card-title text-center font-weight-bold mt-3">
 								<?php echo $dp->nombre_plat; ?>
 							</h5>
@@ -114,23 +114,7 @@ $valRec = $cod[1];
 					<?php 
 						if ($dped -> confirm_ped == 1) {
 					?>
-						<?php
-							if (date("Y-m-d") > date($dped -> fecha_hora_ped)) {
-						?>
-							<div class="border border-danger rounded shadow p-3">
-								<p class="text-center text-danger m-0">
-									La fecha de confirmación de pedido expiro
-								</p>
-							</div>
-						<?php
-							} else{
-						?>
-							<button class="btn btn-success btn-sm" onclick="confirm('<?php echo $valRec; ?>')">
-								Confirmar pedido
-							</button>
-						<?php
-							}
-						?>
+						<b class="text-warning">El pedido no ha sido confirmado</b>
 					<?php
 						} else {
 					?>	
@@ -143,5 +127,3 @@ $valRec = $cod[1];
 		</div>
 	</div>
 </div>
-
-<script src="<?php echo SERVERURLADM; ?>js/confirmped.js"></script>
