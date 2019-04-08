@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-04-2019 a las 16:17:10
+-- Tiempo de generación: 08-04-2019 a las 06:35:20
 -- Versión del servidor: 10.1.25-MariaDB
 -- Versión de PHP: 7.1.7
 
@@ -45,7 +45,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `est_cuenta_adm`, `nombre_adm`, `correo_adm`, `usuario_adm`, `password`, `privilegio_adm`, `fecha_reg`, `fech_activ`) VALUES
-(1, 1, 'Marco', 'marco@gmail.com', 'tony', '81dc9bdb52d04dc20036dbd8313ed055', 'ALL', '2019-04-05', '2019-04-07'),
+(1, 1, 'Marco', 'marco@gmail.com', 'tony', '81dc9bdb52d04dc20036dbd8313ed055', 'ALL', '2019-04-05', '2019-04-08'),
 (2, 1, 'marc', 'marco2@gmail.com', 'tony', '827ccb0eea8a706c4c34a16891f84e7b', 'LIM', '2019-04-07', NULL);
 
 -- --------------------------------------------------------
@@ -91,7 +91,7 @@ CREATE TABLE `categoria` (
 
 INSERT INTO `categoria` (`id_categoria`, `nombre_cat`, `descripcion_cat`, `estado_cat`) VALUES
 (1, 'Mariscos', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, dignissimos unde omnis, doloribus amet nemo ratione!.', 1),
-(2, 'Hamburguesas', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, dignissimos unde omnis, doloribus amet nemo ratione!.', 1),
+(2, 'Hamburguesas', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, dignissimos unde omnis, doloribus amet nemo ratione!.', 0),
 (3, 'Mar y Tierra', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, dignissimos unde omnis, doloribus amet nemo ratione!.', 1);
 
 -- --------------------------------------------------------
@@ -117,7 +117,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `nombre_cli`, `telefono_cli`, `correo_cli`, `usuario_cli`, `password`, `fecha_reg_cli`, `fech_activ_cli`, `estado_cli`) VALUES
-(1, 'Marco aguilar', '7321193748', 'marcocaaguilar@gmail.com', 'tony', '3829486b93ec44395f0b980424bae9b6fb07b7bc', '2019-02-28', '2019-04-02', 1);
+(1, 'Marco aguilar', '7321193748', 'marcocaaguilar@gmail.com', 'tony', '81dc9bdb52d04dc20036dbd8313ed055', '2019-02-28', '2019-04-07', 1);
 
 -- --------------------------------------------------------
 
@@ -131,6 +131,7 @@ CREATE TABLE `det_pedido` (
   `id_direccion` int(11) DEFAULT NULL,
   `confirm_ped` tinyint(4) DEFAULT NULL,
   `fecha_hora_ped` datetime DEFAULT NULL,
+  `fecha_confirm_ped` datetime DEFAULT NULL,
   `cod_conf` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -138,11 +139,11 @@ CREATE TABLE `det_pedido` (
 -- Volcado de datos para la tabla `det_pedido`
 --
 
-INSERT INTO `det_pedido` (`id_detpedido`, `id_carrito`, `id_direccion`, `confirm_ped`, `fecha_hora_ped`, `cod_conf`) VALUES
-(1, 36, 1, 1, '2019-03-15 04:19:17', 'PEDsvzy5m'),
-(2, 37, 1, 1, '2019-03-15 04:19:17', 'PEDsvzy5m'),
-(3, 39, 1, 1, '2019-04-02 06:15:13', 'PEDwgba7n'),
-(4, 40, 1, 1, '2019-04-02 06:15:13', 'PEDwgba7n');
+INSERT INTO `det_pedido` (`id_detpedido`, `id_carrito`, `id_direccion`, `confirm_ped`, `fecha_hora_ped`, `fecha_confirm_ped`, `cod_conf`) VALUES
+(1, 36, 1, 0, '2019-04-07 09:19:17', '2019-04-07 09:21:17', 'PEDsvzy5m'),
+(2, 37, 1, 0, '2019-04-07 09:19:17', '2019-04-07 09:21:17', 'PEDsvzy5m'),
+(3, 39, 1, 1, '2019-04-07 09:15:13', '2019-04-07 09:20:13', 'PEDwgba7n'),
+(4, 40, 1, 1, '2019-04-07 09:15:13', '2019-04-07 09:20:13', 'PEDwgba7n');
 
 -- --------------------------------------------------------
 
@@ -262,7 +263,7 @@ ALTER TABLE `carrito`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
