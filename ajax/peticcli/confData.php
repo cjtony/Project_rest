@@ -85,12 +85,12 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
 							$validPass -> execute();
 							$rowValidPass = $validPass -> rowCount();
 							if ($rowValidPass == 1) {
-								$updData = $dbConexion -> prepare("UPDATE clientes SET nombre_cli = :nameUs, telefono_cli = :telUs,  correo_cli = :corUs, usuario_cli = :userUs WHERE id_cliente = :keyCLi");
+								$updData = $dbConexion -> prepare("UPDATE clientes SET nombre_cli = :nameUs, telefono_cli = :telUs,  correo_cli = :corUs, usuario_cli = :userUs WHERE id_cliente = :keyCli");
 								$updData -> bindParam("nameUs", $nameUs, PDO::PARAM_STR);
 								$updData -> bindParam("telUs", $telUs, PDO::PARAM_STR);
 								$updData -> bindParam("corUs", $corUs, PDO::PARAM_STR);
 								$updData -> bindParam("userUs", $userUs, PDO::PARAM_STR);
-								$updData -> bindParam("keyCLi", $keyCLi, PDO::PARAM_STR);
+								$updData -> bindParam("keyCli", $keyCli, PDO::PARAM_STR);
 								$updData -> execute();
 								if ($updData) {
 									echo 1;

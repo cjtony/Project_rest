@@ -54,7 +54,7 @@ if ($_SESSION['keyCli'] == "" || $_SESSION['keyCli'] == null) {
 							$ins -> bindParam("dirEnv", $dirEnv, PDO::PARAM_INT);
 							$ins -> bindParam("valid", $valid, PDO::PARAM_INT);
 							$ins -> bindParam("fechhor", $fechhor, PDO::PARAM_STR);
-							$ins -> bindParam("codconf", $codconf, PDO::PARAM_INT);
+							$ins -> bindParam("codconf", $codconf, PDO::PARAM_STR);
 							$ins -> execute();
 							if ($ins) {
 								$upd = $bd -> prepare("UPDATE carrito SET estad_car = :confirm WHERE id_carrito = :id_carr && id_cliente = :keyCli");
